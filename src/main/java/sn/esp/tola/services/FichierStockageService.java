@@ -1,6 +1,7 @@
 package sn.esp.tola.services;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -18,4 +19,7 @@ public interface FichierStockageService {
 	public void deleteFile(String id);
 	  
 	public Stream<FichierDB> getAllFiles();
+	
+	
+	public Optional<FichierDB> getFileById(String id);
 }

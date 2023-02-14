@@ -25,14 +25,28 @@ public class Publication {
 	private Long  idpublication;
 	
 	private String nom;
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	private LocalDate date;;
 	private long likes;
 	private long dislikes;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idfichier")
+	@OneToOne(cascade = {
+			CascadeType.PERSIST,
+			CascadeType.MERGE
+	})
+	@JoinTable(	name = "publicationfichierdb", 
+		joinColumns = { 
+				@JoinColumn(name = "idpublication") 
+		}, inverseJoinColumns = { 
+				@JoinColumn(name = "idfichierdb") 
+		}
+	)
 	private FichierDB fichierDB;
+	
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "idfichier")
+//	private FichierDB fichierDB;
 	
 	@OneToMany(cascade = {
 			CascadeType.PERSIST,
@@ -62,11 +76,11 @@ public class Publication {
 		this.commentaires = commentaires;
 	}
 
-	public Long getidpublication() {
+	public Long getIdpublication() {
 		return idpublication;
 	}
 
-	public void setidpublication(Long idpublication) {
+	public void setIdpublication(Long idpublication) {
 		this.idpublication = idpublication;
 	}
 
@@ -128,9 +142,9 @@ public class Publication {
 
 	@Override
 	public String toString() {
-		return "Publication [idpublication=" + idpublication + ", nom=" + nom + ", description=" + description + ", date="
-				+ date + ", likes=" + likes + ", dislikes=" + dislikes + ", fichierDB=" + fichierDB + ", commentaires="
-				+ commentaires + "]";
+		return "Publication [idpublication=" + idpublication + ", nom=" + nom + ", description=" + description
+				+ ", date=" + date + ", likes=" + likes + ", dislikes=" + dislikes + ", fichierDB=" + fichierDB
+				+ ", commentaires=" + commentaires + "]";
 	}
-		
+
 }

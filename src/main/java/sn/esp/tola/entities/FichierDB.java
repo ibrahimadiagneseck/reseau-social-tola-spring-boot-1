@@ -19,7 +19,8 @@ public class FichierDB {
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	private String id;
+	@Column(name = "id", nullable = false)
+	private String idfichierdb;
 
 	private String nom;
 	private String type;
@@ -32,8 +33,8 @@ public class FichierDB {
 	public FichierDB() {
 	}
 
-	public FichierDB(String id, String nom, String type, byte[] donnee) {
-		this.id = id;
+	public FichierDB(String idfichierdb, String nom, String type, byte[] donnee) {
+		this.idfichierdb = idfichierdb;
 		this.nom = nom;
 		this.type = type;
 		this.donnee = donnee;
@@ -45,12 +46,12 @@ public class FichierDB {
 		this.donnee = donnee;
 	}
 
-	public String getId() {
-		return id;
+	public String getIdfichierdb() {
+		return idfichierdb;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String idfichierdb) {
+		this.idfichierdb = idfichierdb;
 	}
 
 	public String getNom() {
@@ -79,7 +80,7 @@ public class FichierDB {
 
 	@Override
 	public String toString() {
-		return "FichierDB [id=" + id + ", nom=" + nom + ", type=" + type + ", donnee=" + Arrays.toString(donnee) + "]";
+		return "FichierDB [idfichierdb=" + idfichierdb + ", nom=" + nom + ", type=" + type + ", donnee=" + Arrays.toString(donnee) + "]";
 	}
 	
 		

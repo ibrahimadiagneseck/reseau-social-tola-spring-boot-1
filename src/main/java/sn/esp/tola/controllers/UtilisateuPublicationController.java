@@ -41,7 +41,7 @@ public class UtilisateuPublicationController {
 		return list;
 	}
 	
-	@PostMapping("/AjouterUtilisateurPublicationById/{idutulisateur}/{idquestion}")
+	@PostMapping("/AjouterUtilisateurPublicationById/{idutulisateur}/{idpublication}")
 	@ResponseBody
 	public void AjouterUtilisateurPublicationnById(@PathVariable long idutulisateur, @PathVariable long idpublication) {
 		

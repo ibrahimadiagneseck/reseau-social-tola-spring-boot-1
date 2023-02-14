@@ -46,7 +46,7 @@ public class PublicationController {
 	@PutMapping("/ModifierPublication/{id}")
 	@ResponseBody
 	public Publication ModifierPublication(@PathVariable long id, @RequestBody Publication p) {
-		p.setidpublication(id);
+		p.setIdpublication(id);
 		return publicationService.updatePublication(p);
 	}
 	
