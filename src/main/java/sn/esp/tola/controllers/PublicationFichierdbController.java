@@ -1,5 +1,6 @@
 package sn.esp.tola.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,6 +50,7 @@ public class PublicationFichierdbController {
 	public void AjouterPublicationFichierdbById(@PathVariable long idpublication, @PathVariable String idfichierdb) {
 		
 		Publication publication = publicationService.getPublication(idpublication);
+		publication.setDate(LocalDate.now());
 		FichierDB fichierDB = fichierStockageService.getFile(idfichierdb);
 		
 		String filename = fichierDB.getNom();
