@@ -1,7 +1,7 @@
 package sn.esp.tola.controllers;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,7 +46,7 @@ public class PublicationFichierdbController {
 	
 	@PostMapping("/AjouterPublicationFichierdbById/{idpublication}/{idfichierdb}")
 	@ResponseBody
-	public void AjouterPublicationFichierdbById(@PathVariable long idpublication, @PathVariable String idfichierdb) throws IOException {
+	public void AjouterPublicationFichierdbById(@PathVariable long idpublication, @PathVariable String idfichierdb) {
 		
 		Publication publication = publicationService.getPublication(idpublication);
 		FichierDB fichierDB = fichierStockageService.getFile(idfichierdb);
@@ -61,8 +61,12 @@ public class PublicationFichierdbController {
         
 		if(publication != null && fichierDB != null && multipartFile != null) {
 			System.out.println(multipartFile instanceof MultipartFile);
-			//PublicationFichierdb publicationFichierdb = new PublicationFichierdb(publication, fichierDB);
-			//publicationFichierdbRepository.save(publicationFichierdb);
+			
+			UUID uuid = UUID.randomUUID();
+	        long id = uuid.getLeastSignificantBits() ^ uuid.getMostSignificantBits();
+	        
+			PublicationFichierdb publicationFichierdb = new PublicationFichierdb(id, publication, fichierDB);
+			publicationFichierdbRepository.save(publicationFichierdb);
 	
 		}
 	}
