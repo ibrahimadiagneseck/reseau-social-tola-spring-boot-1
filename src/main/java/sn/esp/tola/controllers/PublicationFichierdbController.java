@@ -1,5 +1,6 @@
 package sn.esp.tola.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import sn.esp.tola.entities.FichierDB;
+import sn.esp.tola.entities.MockMultipartFile;
 import sn.esp.tola.entities.Publication;
 import sn.esp.tola.entities.PublicationFichierdb;
 import sn.esp.tola.repositories.PublicationFichierdbRepository;
@@ -43,12 +46,24 @@ public class PublicationFichierdbController {
 	
 	@PostMapping("/AjouterPublicationFichierdbById/{idpublication}/{idfichierdb}")
 	@ResponseBody
-	public void AjouterPublicationFichierdbById(@PathVariable long idpublication, @PathVariable String idfichierdb) {
+	public void AjouterPublicationFichierdbById(@PathVariable long idpublication, @PathVariable String idfichierdb) throws IOException {
 		
 		Publication publication = publicationService.getPublication(idpublication);
 		FichierDB fichierDB = fichierStockageService.getFile(idfichierdb);
 		
-		if(publication != null && fichierDB != null)
-			publicationFichierdbRepository.save(new PublicationFichierdb(publication, fichierDB));
+		String filename = fichierDB.getNom();
+        String contentType = fichierDB.getType();
+        byte[] content = fichierDB.getdonnee();
+        //ByteArrayResource resource = new ByteArrayResource(content);
+        MultipartFile  multipartFile = new MockMultipartFile(filename, filename, contentType, content);
+
+        // fichierStockageService.store(multipartFile);
+        
+		if(publication != null && fichierDB != null && multipartFile != null) {
+			System.out.println(multipartFile instanceof MultipartFile);
+			//PublicationFichierdb publicationFichierdb = new PublicationFichierdb(publication, fichierDB);
+			//publicationFichierdbRepository.save(publicationFichierdb);
+	
+		}
 	}
 }
